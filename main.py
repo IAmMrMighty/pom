@@ -92,7 +92,7 @@ def choose():
             systemtemp = r"C:\Windows\Temp"
             clearconsole()
             try:
-                print("Clearing Systems temporary files")
+                print(bcolors.OKBLUE + "Clearing Systems temporary files")
                 shutil.rmtree(systemtemp, ignore_errors=True)
                 print(bcolors.OKGREEN + "\nDONE.")
                 time.sleep(5)
@@ -106,7 +106,7 @@ def choose():
             profiletemp = "C:\\Users\\" + username + "\\AppData\\Local\\Temp\\"
             clearconsole()
             try:
-                print("Clearing profile temporary files")
+                print(bcolors.OKBLUE + "Clearing profile temporary files")
                 shutil.rmtree(profiletemp, ignore_errors=True)
                 print(bcolors.OKGREEN + "\nDONE.")
                 time.sleep(5)
@@ -118,7 +118,7 @@ def choose():
         #Disabling and stopping sysmain service
         elif choice == "3":
             clearconsole()
-            print("Disabling SysMain Service ...")
+            print(bcolors.OKBLUE + "Disabling SysMain Service ...")
             os.system("sc config sysmain start= disabled >nul")
             time.sleep(1)
             os.system("net stop SysMain")
@@ -131,7 +131,7 @@ def choose():
             prefetch = "C:\\Windows\\Prefetch\\"
             clearconsole()
             try:
-                print("Clearing prefetch")
+                print(bcolors.OKBLUE + "Clearing prefetch")
                 if os.path.exists(prefetch):
                     shutil.rmtree(prefetch)
                     print(bcolors.OKGREEN + "\nDONE.")
@@ -139,7 +139,7 @@ def choose():
                     time.sleep(5)
                     choose()
                 else:
-                    print("Prefetch folder doesn't exist. Creating ...")
+                    print(bcolors.OKBLUE + "Prefetch folder doesn't exist. Creating ...")
                     os.mkdir(prefetch)
                     time.sleep(5)
                     choose()
@@ -154,7 +154,7 @@ def choose():
             softwaredistribution = 'C:\\Windows\\SoftwareDistribution\\Download\\'
             clearconsole()
             try:
-                print("Clearing Windows Update downloads")
+                print(bcolors.OKBLUE + "Clearing Windows Update downloads")
                 if os.path.exists(softwaredistribution):
                     shutil.rmtree(softwaredistribution)
                     os.mkdir(softwaredistribution)
@@ -162,7 +162,7 @@ def choose():
                     time.sleep(5)
                     choose()
                 else:
-                    print("Windows Update Cache folder doesnt exist. Creating...")
+                    print(bcolors.OKBLUE + "Windows Update Cache folder doesnt exist. Creating...")
                     os.mkdir(softwaredistribution)
                     time.sleep(5)
                     choose()
@@ -195,7 +195,7 @@ def choose():
         
         elif choice == "7":
             clearconsole()
-            print("Checking system drive for failures ...")
+            print(bcolors.OKBLUE + "Checking system drive for failures ...")
             try:
                 os.system("chkdsk c:>nul")
                 os.system("sfc /scannow>nul")
@@ -223,66 +223,60 @@ def choose():
             
             #RUN
             clearconsole()
-            try:
-                print("Clearing Systems temporary files")
-                shutil.rmtree(systemtemp, ignore_errors=True)
+            print(bcolors.OKBLUE + "Clearing Systems temporary files")
+            shutil.rmtree(systemtemp, ignore_errors=True)
+            print(bcolors.OKGREEN + "\nDONE.")
+            time.sleep(5)
+            print(bcolors.OKBLUE + "Clearing profile temporary files")
+            shutil.rmtree(profiletemp, ignore_errors=True)
+            print(bcolors.OKGREEN + "\nDONE.")
+            time.sleep(5)
+            print(bcolors.OKBLUE + "Disabling SysMain Service ...")
+            os.system("sc config sysmain start= disabled >nul")
+            time.sleep(1)
+            os.system("net stop SysMain")
+            print(bcolors.OKGREEN + "DONE.")
+            time.sleep(1)
+            print(bcolors.OKBLUE + "Clearing prefetch")
+            if os.path.exists(prefetch):
+                shutil.rmtree(prefetch)
                 print(bcolors.OKGREEN + "\nDONE.")
+                os.mkdir(prefetch)
                 time.sleep(5)
-                print("Clearing profile temporary files")
-                shutil.rmtree(profiletemp, ignore_errors=True)
-                print(bcolors.OKGREEN + "\nDONE.")
+            else:
+                print(bcolors.OKBLUE + "Prefetch folder doesn't exist. Creating ...")
+                os.mkdir(prefetch)
                 time.sleep(5)
-                print("Disabling SysMain Service ...")
-                os.system("sc config sysmain start= disabled >nul")
-                time.sleep(1)
-                os.system("net stop SysMain")
+            print(bcolors.OKBLUE + "Clearing Windows Update downloads")
+            if os.path.exists(softwaredistribution):
+                shutil.rmtree(softwaredistribution)
+                os.mkdir(softwaredistribution)
                 print(bcolors.OKGREEN + "DONE.")
-                time.sleep(1)
-                print("Clearing prefetch")
-                if os.path.exists(prefetch):
-                    shutil.rmtree(prefetch)
-                    print(bcolors.OKGREEN + "\nDONE.")
-                    os.mkdir(prefetch)
-                    time.sleep(5)
-                else:
-                    print("Prefetch folder doesn't exist. Creating ...")
-                    os.mkdir(prefetch)
-                    time.sleep(5)
-                print("Clearing Windows Update downloads")
-                if os.path.exists(softwaredistribution):
-                    shutil.rmtree(softwaredistribution)
-                    os.mkdir(softwaredistribution)
-                    print(bcolors.OKGREEN + "DONE.")
-                else:
-                    print("Windows Update Cache folder doesnt exist. Creating...")
-                    os.mkdir(softwaredistribution)
-                    time.sleep(5)
-                for path, dirs, files in os.walk(roamingpath):
-                    for f in files:
-                        fp = os.path.join(path, f)
-                        size += os.path.getsize(fp)
-                roamingsize = size / 1024
-                roamingsize = roamingsize / 1024
-                roamingsize = round(roamingsize)
-                if roamingsize >= 600:
-                    print(bcolors.FAIL + "Roaming folder might be full")
-                    print(str(roamingsize) + "MB\\600MB")
-                    time.sleep(5)
-                else:
-                    print(bcolors.OKGREEN + "Roaming folder is in good standing.")
-                    time.sleep(5)
-                print("\nChecking system drive for failures [THIS MIGHT TAKE A WHILE] ...")
-                os.system("chkdsk c:>nul")
-                os.system("sfc /scannow>nul")
+            else:
+                print(bcolors.OKBLUE + "Windows Update Cache folder doesnt exist. Creating...")
+                os.mkdir(softwaredistribution)
                 time.sleep(5)
-                print(bcolors.OKGREEN + "DONE.")
+            for path, dirs, files in os.walk(roamingpath):
+                for f in files:
+                    fp = os.path.join(path, f)
+                    size += os.path.getsize(fp)
+            roamingsize = size / 1024
+            roamingsize = roamingsize / 1024
+            roamingsize = round(roamingsize)
+            if roamingsize >= 600:
+                print(bcolors.FAIL + "Roaming folder might be full")
+                print(str(roamingsize) + "MB\\600MB")
                 time.sleep(5)
-                choose()
-
-            except:
-                print(bcolors.FAIL + 'Error while running script. \nGoing back to menu')
-                time.sleep(2)
-                choose()
+            else:
+                print(bcolors.OKGREEN + "Roaming folder is in good standing.")
+                time.sleep(5)
+            print(bcolors.OKBLUE + "\nChecking system drive for failures [THIS MIGHT TAKE A WHILE] ...")
+            os.system("chkdsk c:>nul")
+            os.system("sfc /scannow>nul")
+            time.sleep(5)
+            print(bcolors.OKGREEN + "DONE.")
+            time.sleep(5)
+            choose()
 
         elif choice == "0":
             clearconsole()
