@@ -5,7 +5,6 @@ import sys
 import traceback
 import getpass
 import shutil
-import pyautogui
 from colors import bcolors
 
 #Check for administrator priviledges
@@ -23,7 +22,7 @@ def checkos():
 
 #Clear Console
 def clearconsole():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls')
 
 ## VARIABLES
 rtset = 0 #Restorepoint set
@@ -84,7 +83,7 @@ def choose():
 """)
 ## MADE WITH http://www.patorjk.com/software/taag
 
-        print("\n" + bcolors.WARNING + "POM - Performance Optimizer" + bcolors.FAIL + "\n \nThis script will only work on Windows Systems!" + bcolors.OKBLUE + "\n \n[1] Clear only System temporary files \n[2] Clear only Profile temporary files \n[3] Disable SysMain service\n[4] Clear only Prefetch\n[5] Clear Windows Update Downloadsn \n[6] Check Roaming folder size \n[7] Check system drive C \n\n[9] Run everything \n[0] Exit")
+        print("\n" + bcolors.WARNING + "POM - Performance Optimizer" + bcolors.FAIL + "\n \nThis script will only work on Windows Systems!" + bcolors.OKBLUE + "\n \n[1] Clear only System temporary files \n[2] Clear only Profile temporary files \n[3] Disable SysMain service\n[4] Clear only Prefetch\n[5] Clear Windows Update downloads \n[6] Check Roaming folder size \n[7] Check system drive C \n\n[9] Run everything \n[0] Exit")
         choice = input("> ")
         
         #Cleaning systemtemp
@@ -97,8 +96,8 @@ def choose():
                 print(bcolors.OKGREEN + "\nDONE.")
                 time.sleep(5)
                 choose()
-            except:
-                print(bcolors.FAIL + 'Error while deleting files. \nGoing back to menu')
+            except Exception as e:
+                print(e)
                 choose()
 
         #Cleaning profile temp
@@ -111,8 +110,8 @@ def choose():
                 print(bcolors.OKGREEN + "\nDONE.")
                 time.sleep(5)
                 choose()
-            except:
-                print(bcolors.FAIL + 'Error while deleting files. \n Going back to menu')
+            except Exception as e:
+                print(e)
                 choose()
 
         #Disabling and stopping sysmain service
@@ -144,8 +143,8 @@ def choose():
                     time.sleep(5)
                     choose()
 
-            except:
-                print(bcolors.FAIL + 'Error while deleting files. \nGoing back to menu')
+            except Exception as e:
+                print(e)
                 time.sleep(4)
                 choose()
         
@@ -166,8 +165,8 @@ def choose():
                     os.mkdir(softwaredistribution)
                     time.sleep(5)
                     choose()
-            except:
-                print(bcolors.FAIL + 'Error occured. \nGoing back to menu')
+            except Exception as e:
+                print(e)
                 time.sleep(5)
                 choose()
         
@@ -203,8 +202,8 @@ def choose():
                 print(bcolors.OKGREEN + "DONE.")
                 time.sleep(5)
                 choose()
-            except Exception:
-                print(bcolors.FAIL + "Unable to run chkdsk.")
+            except Exception as e:
+                print(e)
     
 
 
